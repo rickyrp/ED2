@@ -665,6 +665,23 @@ public class ArbolMViasBusqueda<K extends Comparable<K>, V> implements IArbolBus
             nivelN--;
         }
     }
+
+    private void ejemplo(Queue<NodoMVias<K, V>> colaDeNodos, int nivelN) {
+        while (!colaDeNodos.isEmpty() && nivelN > 0) {
+            int cantNodos = colaDeNodos.size();
+            int contador = 0;
+            while (contador < cantNodos) {
+                NodoMVias<K, V> nodoActual = colaDeNodos.poll();
+                for (int i = 0; i < this.orden; i++) {
+                    if (!nodoActual.esHijoVacio(i)) {
+                        colaDeNodos.offer(nodoActual.getHijo(i));
+                    }
+                }
+                contador++;
+            }
+            nivelN--;
+        }
+    }
         
     /*3. Para un arbol mvias crear un metodo que retorne la cantidad de hijos 
     vacios antes del nivel N del arbol*/
@@ -875,6 +892,52 @@ public class ArbolMViasBusqueda<K extends Comparable<K>, V> implements IArbolBus
         }
 
         return true;
+    }
+
+    /*--------------------------------------------------------------------------
+                    M O D E L O S   D E   E X A M E N E S
+    --------------------------------------------------------------------------*/
+    /*Para un árbol mvias de búsqueda implemente un método que retorne cuantos hijos
+    no vacios hay en el nivel n del árbol.*/
+    public int hijosNoVaciosEnNivelN(int nivelN) {
+        if  (this.esArbolVacio() || nivelN < 0) {
+            return 0;
+        }
+        int cant = 0;
+        Queue<NodoMVias<K, V>> colaDeNodos = new LinkedList<>();
+        colaDeNodos.offer(this.raiz);
+        this.irAlNivelN(colaDeNodos, nivelN);
+
+        while (!colaDeNodos.isEmpty()) {
+            NodoMVias<K, V> nodoActual = colaDeNodos.poll();
+            for (int i = 0; i < this.orden; i++) {
+                if (!nodoActual.esHijoVacio(i)) {
+                    cant++;
+                }
+            }
+        }
+
+        return cant;
+    }
+
+    private void irNivel(Queue<NodoMVias<K,V>> colaDeNodos, int nivelN) {
+        while (!colaDeNodos.isEmpty() && nivelN > 0) {
+            int cantNodos = colaDeNodos.size();
+            int contador = 0;
+            while (contador < cantNodos) {
+                NodoMVias<K, V> nodoActual = colaDeNodos.poll();
+                for (int i = 0; i < nodoActual.cantidadDeClavesNoVacias(); i++) {
+                    if  (!nodoActual.esHijoVacio(i)) {
+                        colaDeNodos.offer(nodoActual.getHijo(i));
+                    }
+                }
+                if  (!nodoActual.esHijoVacio(nodoActual.cantidadDeClavesNoVacias())) {
+                    colaDeNodos.offer(nodoActual.getHijo(nodoActual.cantidadDeClavesNoVacias()));
+                }
+                contador++;
+            }
+            nivelN--;
+        }
     }
 
 }

@@ -9,7 +9,7 @@ import java.util.Stack;
 
 /**
  *
- * @author RYAN RAMIREZ PINEDA
+ * @author Ramirez Pineda Ricky Roy
  */
 public class ArbolB<K extends Comparable<K>, V> extends ArbolMViasBusqueda<K, V> {
 

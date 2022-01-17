@@ -7,7 +7,7 @@ package bo.edu.uagrm.ficct.ed2.arboles;
 
 /**
  *
- * @author RYAN RAMIREZ PINEDA
+ * @author Ramirez Pineda Ricky Roy
  */
 public class ExcepcionClaveNoExiste extends Exception {
 
